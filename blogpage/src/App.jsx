@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <h1>Hello madarchodo mai firse aagya </h1>
+       <h1 className='text-orange-300'>Hello there </h1>
     </>
   )
 }

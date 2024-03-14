@@ -1,14 +1,36 @@
+import React from 'react';
+import {useState,useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import authService from './appwrite/auth.js';
+import {login,logout} from './store/authSlice.js';
 
-import './App.css'
+
+
 
 function App() {
  
+  const[loading, setLoading] = useState(null);
+  const dispatch = useDispatch();
 
-  return (
-    <>
-       <h1 className='text-orange-300'>Hello there </h1>
-    </>
-  )
+
+  useEffect(()=>{
+    authService.getCurrenUser()
+    .then((userData)=>{
+       if(userData){
+          dispatch(login({userData}));
+       }
+
+       else{
+        dispatch(logout());
+       }
+    })
+    .finally(() => setLoading(false));
+  }, [] )
+
+  
+  return !loading ? (
+    <div className=''> </div>
+  ) : null 
 }
 
 export default App

@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -10,7 +9,4 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 =======
 This is a Complete Capstone Project Made using React 
->>>>>>> dcfdb5ade3d463f4d10fff8b4b0f586f1e7e7fe7
-=======
-This is a Complete Capstone Project Made using React 
->>>>>>> dcfdb5ade3d463f4d10fff8b4b0f586f1e7e7fe7
+>>>>>>> bdee89f55b1d426778964765ae940feffb3a8375

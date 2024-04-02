@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Buttons = ({
+const Button = ({
     children,
     type = 'button',
     bgColor = 'bg-blue-600',
@@ -21,4 +21,4 @@ const Buttons = ({
     )
 }
 
-export default Buttons; 
+export default Button; 

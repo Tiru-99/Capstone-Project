@@ -4,7 +4,7 @@ import Footer from './Footer/Footer';
 import Logo from './Logo';
 import Container from './container/Container';
 import Logoutbtn from './Header/Logoutbtn';
-import RTE from './RTE.JSX';
+import RTE from './RTE'
 import Select from './Select';
 import Signup from './Signup';
 import Login from "./Login";

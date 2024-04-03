@@ -4,17 +4,16 @@ import { Button, Input, Select, RTE } from '../index.js';
 import appwriteService from '../../appwrite/config.js';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import '../custom.css'; 
+import '../custom.css';
 
 function PostForm({ post }) {
     const navigate = useNavigate();
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
-            title: post?.title || '',
-            slug: post?.$id || '',
-            content: post?.content || '',
-            status: post?.status || 'active',
-            //here I made recent changes
+            title: (typeof post === 'object' && post?.title) || '',
+            slug: (typeof post === 'object' && post?.$id) || '',
+            content: (typeof post === 'object' && post?.content) || '',
+            status: (typeof post === 'object' && post?.status) || 'active',
         },
     });
 
@@ -25,7 +24,7 @@ function PostForm({ post }) {
         setIsLoading(true); // Start loading
 
         try {
-            if (post && post.$id) {
+            if (typeof post === 'object' && post && post.$id) {
                 const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
                 if (file) {
@@ -43,6 +42,9 @@ function PostForm({ post }) {
                 } else {
                     console.log('Some error occurred');
                 }
+            } else if (typeof post === 'object' && post) {
+                // Handle the case when post.$id is undefined
+                console.log('Invalid post ID');
             } else {
                 const file = await appwriteService.uploadFile(data.image[0]);
 
@@ -62,6 +64,7 @@ function PostForm({ post }) {
             setIsLoading(false); // Stop loading
         }
     };
+
     const slugTransform = useCallback((value) => {
         if (value && typeof value === 'string')
             return value
@@ -111,7 +114,7 @@ function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register('image', { required: !post })}
                 />
-                {post && (
+                {typeof post === 'object' && post && (
                     <div className="w-full mb-4">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
@@ -126,8 +129,8 @@ function PostForm({ post }) {
                     className="mb-4"
                     {...register('status', { required: true })}
                 />
-                <Button type="submit" bgColor={post ? 'bg-green-500' : undefined} className="w-full relative">
-                    {post ? 'Update' : 'Submit'}
+                <Button type="submit" bgColor={(typeof post === 'object' && post) ? 'bg-green-500' : undefined} className="w-full relative">
+                    {(typeof post === 'object' && post) ? 'Update' : 'Submit'}
                     {isLoading && (
                         <div className="loader absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     )}
@@ -136,4 +139,5 @@ function PostForm({ post }) {
         </form>
     );
 }
+
 export default PostForm;

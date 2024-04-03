@@ -7,7 +7,7 @@ import {Client, ID, Databases, Storage , Query} from "appwrite";
 //Main class service 
 export class Service{
     client = new Client(); 
-    database; 
+    databases; 
     bucket; 
 
     constructor(){
@@ -46,7 +46,7 @@ export class Service{
         try{
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
-                conf.appwriteBucketId,
+                conf.appwriteCollectionId,
                 slug,
                 {
                     title, 
@@ -81,7 +81,7 @@ export class Service{
     //Code to get post 
     async getPost(slug){
         try{
-            await this.databases.getDocument(
+           return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
@@ -109,10 +109,10 @@ export class Service{
     //file upload services 
     async uploadFile(file){
         try{
-            await this.bucket.createFile(
+           return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
-                file,
+                file
                 
             )
         }
@@ -136,11 +136,14 @@ export class Service{
         }
     }
 
-    async filePreview(fileId){
-        return this.bucket.getFilePreview(
+    getFilePreview(fileId){
+       return this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId,
         )
     }
 
 }
+
+const service = new Service()
+export default service

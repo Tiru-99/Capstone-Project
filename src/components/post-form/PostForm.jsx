@@ -4,7 +4,7 @@ import { Button, Input, Select, RTE } from '../index.js';
 import appwriteService from '../../appwrite/config.js';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import '../custom.css'; // Import CSS file for styling loader
+import '../custom.css'; 
 
 function PostForm({ post }) {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ function PostForm({ post }) {
             slug: post?.$id || '',
             content: post?.content || '',
             status: post?.status || 'active',
+            //here I made recent changes
         },
     });
 
@@ -22,20 +23,20 @@ function PostForm({ post }) {
 
     const submit = async (data) => {
         setIsLoading(true); // Start loading
-    
+
         try {
-            if (post) {
+            if (post && post.$id) {
                 const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-    
+
                 if (file) {
                     await appwriteService.deleteFile(post.featuredImage);
                 }
-    
+
                 const dbPost = await appwriteService.updatePost(post.$id, {
                     ...data,
                     featuredImage: file ? file.$id : undefined,
                 });
-    
+
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
                     console.log('successfully navigated to the path');
@@ -44,12 +45,12 @@ function PostForm({ post }) {
                 }
             } else {
                 const file = await appwriteService.uploadFile(data.image[0]);
-    
+
                 if (file) {
                     const fileId = file.$id;
                     data.featuredImage = fileId;
                     const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
-    
+
                     if (dbPost) {
                         navigate(`/post/${dbPost.$id}`);
                     }

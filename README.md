@@ -27,5 +27,3 @@ This project is a modern and feature-rich blog application built using React.js 
 ## Contributing:
 Contributions are welcome! Please feel free to open an issue or submit a pull request for any improvements or features you'd like to add.
 
-## License:
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

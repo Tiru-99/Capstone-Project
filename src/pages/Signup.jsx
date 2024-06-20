@@ -6,6 +6,7 @@ const Signup = ()=>{
 
     return(
         <>
+        {/* This code is for signup component  */}
             <div className="py-8">
                 <SignUpComponent/>
             </div>
